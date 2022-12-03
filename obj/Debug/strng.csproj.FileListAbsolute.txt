@@ -1,0 +1,7 @@
+C:\Users\paart\source\repos\strng\bin\Debug\strng.exe.config
+C:\Users\paart\source\repos\strng\bin\Debug\strng.exe
+C:\Users\paart\source\repos\strng\bin\Debug\strng.pdb
+C:\Users\paart\source\repos\strng\obj\Debug\strng.csproj.AssemblyReference.cache
+C:\Users\paart\source\repos\strng\obj\Debug\strng.csproj.CoreCompileInputs.cache
+C:\Users\paart\source\repos\strng\obj\Debug\strng.exe
+C:\Users\paart\source\repos\strng\obj\Debug\strng.pdb
