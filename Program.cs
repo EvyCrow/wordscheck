@@ -7,137 +7,132 @@ namespace strng
     class Program
     {
 
+        static bool Check(string a, string b)
+        {
+            /***
+                quick checks block
+                ***/
+
+            //if lines have different length
+            if (a.Length != b.Length)
+            { return false;}
+
+            //if lines are the same
+            if (String.Compare(a, b) == 0)
+            { return true; }
+
+            int len = a.Length;
+            //final switch for answer
+            bool trig = true;
+            int ind;
+
+            /***************
+            loop below checks all the letters
+            if letter from the line a IS NOT in line b
+            trig changes to negative answer and break [we don't have to proseed]
+
+            if letter from the line a IS in line b
+            letter removed from line b
+             ***************/
+
+            for (int i = 0; i < len; i++)
+            {
+                if (b.Contains(a[i]) == false)
+                {
+                    trig = false;
+                    break;
+                }
+                ind = b.IndexOf(a[i]);
+                b = b.Remove(ind, 1);
+            }
+
+            /**** ANSWER BLOCK ****/
+
+            if (trig == true)
+            { return true; }
+            else
+            { return false;}
+        }
+
+
+        static void Output(bool answer)
+        {
+            if (answer == true)
+            { Console.Write("Make second line is possible\n"); }
+            else
+            { Console.Write("Make second line is impossible\n"); }
+        }
+
+        static string GetDirect()
+        {
+            string dir1 = Directory.GetCurrentDirectory();
+            string directory = "";
+
+            int index = dir1.IndexOf("strng") + 5;
+
+            for (int i = 0; i <= index; i++)
+                directory += dir1[i];
+            directory += "input.txt";
+
+            return directory;
+        }
+
         static void Main(string[] args)
         {
             //var for main loop
-            bool chek = true;
-            //var that splits the string check into two steps
-            //first: from file
-            //second: user's
-            bool test = true;
-            int step = 0;
-            while (chek == true)
+            string chek = "1";
+
+            while (chek != "0")
             {
                 string a="";
                 string b="";
 
-                if (test==true)
+                Console.Write("enter 1 for example, 2 for user check, 0 to exit >");
+                chek = Console.ReadLine();
+
+                switch (chek)
                 {
-                    //var to count lines from file
-                    int linecount = 1;
-                    //!!! change directory to yours !!!
-                    StreamReader f = new StreamReader("C:/Users/paart/source/repos/strng/input.txt");
-                    while (!f.EndOfStream)
-                    {
-                        //first line
-                        if (linecount == 1)
+                    case ("1"):
+
+                        int linecount = 1;
+                        
+                        StreamReader f = new StreamReader(GetDirect());
+                        while (!f.EndOfStream)
                         {
-                            a = f.ReadLine();
+                            //first line
+                            if (linecount == 1)
+                            { a += f.ReadLine(); }
+                            //second line
+                            else { b += f.ReadLine(); }
+
+                            linecount++;
                         }
-                        //second line
-                        else { b = f.ReadLine(); }
-
-                        linecount++;
-                    }
-                    f.Close();
-
-                    //set the switch [steps] off
-                    test = false;
-                    Console.WriteLine($"example of working with lines {a} and {b}");
-                }
-                else 
-                {
-                    //getting lines on second step
-                    Console.WriteLine("enter a >");
-                    a = Console.ReadLine();
-                    Console.WriteLine("\nenter b >");
-                    b = Console.ReadLine();
-                }
 
 
-                    
-                /***
-                quick checks block
-                ***/
+                        f.Close();
+                        Console.WriteLine($"example of working with lines: \n{a} \nand \n{b}");
 
-                //if lines have different length
-                if (a.Length != b.Length)
-                {
-                    Console.WriteLine("\nmake up the second line is impossible");
-                    Console.ReadLine();
+                        bool r = Check(a, b);
+                        Output(r);
 
-                    //important part of quiting programm   [QUIT]
-                    step++;
-                    if (step == 2)
-                    { break; }
+                        continue;
 
-                    continue;
-                }
+                    case ("2"):
+                        Console.Write("enter a >");
+                        a = Console.ReadLine();
+                        Console.Write("\nenter b >");
+                        b = Console.ReadLine();
 
-                //if lines are the same
-                if (String.Compare(a, b) == 0)
-                {
-                    Console.WriteLine("\nmake up the second line is possible");
-                    Console.ReadLine();
+                        Output(Check(a, b));
 
-                    //[QUIT]
-                    step++;
-                    if (step == 2)
-                    { break; }
+                        continue;
 
-                    continue;
-                }
-
-                int len = a.Length;
-                //final switch for answer
-                bool trig = true;
-                int ind;
-
-                /***************
-                loop below checks all the letters
-                if letter from the line a IS NOT in line b
-                trig for negative answer and break [we don't have to proseed]
-
-                if letter from the line a IS in line b
-                letter removed from line b
-                 ***************/
-
-                for (int i = 0; i < len; i++)
-                {
-                    if (b.Contains(a[i]) == false)
-                    {
-                        trig = false;
+                    case ("0"):
                         break;
-                    }
-                    ind = b.IndexOf(a[i]);
-                    b = b.Remove(ind, 1);
-                }
 
-                /**** ANSWER BLOCK ****/
-
-                if (trig == true)
-                {
-                    Console.WriteLine("\nmake up the second line is possible");
-                    Console.ReadLine();
-
-                    //[QUIT]
-                    step++;
-                    if (step == 2)
-                    { break; }
-
-                    continue;
-                }
-                else
-                {
-                    Console.WriteLine("\nmake up the second line is impossible");
-                    Console.ReadLine();
-
-                    //[QUIT]
-                    step++;
-                    if (step == 2)
-                    { break; }
-
-                    continue;
+                    default:
+                        Console.Write("Unknown input\n");
+                        continue;
                 }
             }
 
